@@ -8,7 +8,7 @@ refrigerant:
   code: LL
 
 Light:
-  question: Đèn của tủ lạnh như thế nào?
+  question: Đèn của tủ lạnh có biểu hiện gì không?
   options:
     - 1. Bình thường
     - 2. Tủ lạnh chớp đèn liên tục
@@ -25,7 +25,7 @@ Block:
   code: B
 
 duct:
-  question: Ống đồng của tủ lạnh như thế nào?
+  question: Ống đồng của tủ lạnh có hiện tượng gì không?
   options:
     - 1. Bình thường
     - 2. Ống đồng có tia nước bắn ra
