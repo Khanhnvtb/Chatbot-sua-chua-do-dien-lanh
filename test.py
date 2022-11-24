@@ -4,10 +4,13 @@ import pandas as pd
 case = "\Case.xlsx"
 question = '\question.yml'
 
-sheet_name_DH = ['Hoạt động', 'Tình trạng', 'Nhiệt độ', 'Đèn báo lỗi, bảng hiển thị','Quạt dàn lạnh', 'Quạt dàn nóng', 'Cục nóng', 'Ống đồng', 'Mùi', 'Tín hiệu remote']
-sheet_name_TL = ['Khả năng làm lạnh', 'Đèn', 'Block', 'Ống đồng', 'Nhiệt độ', 'Hoạt động', 'Tình trạng', 'Dàn nóng', 'Khả năng bảo quản', 'Mùi']
+sheet_name_DH = ['Hoạt động', 'Tình trạng', 'Nhiệt độ', 'Đèn báo lỗi, bảng hiển thị',
+                 'Quạt dàn lạnh', 'Quạt dàn nóng', 'Cục nóng', 'Ống đồng', 'Mùi', 'Tín hiệu remote']
+sheet_name_TL = ['Khả năng làm lạnh', 'Đèn', 'Block', 'Ống đồng', 'Nhiệt độ',
+                 'Hoạt động', 'Tình trạng', 'Dàn nóng', 'Khả năng bảo quản', 'Mùi']
 
-data2 = pd.read_excel("Điều hoà\Độ tương đồng.xlsx", sheet_name=sheet_name_DH, index_col=0)
+data2 = pd.read_excel("Điều hoà\Độ tương đồng.xlsx",
+                      sheet_name=sheet_name_DH, index_col=0)
 
 
 dict_signal_DH = {
@@ -41,14 +44,15 @@ dict_signal = {}
 print('Hệ thống: Bạn cần tư vấn về vấn đề gì?')
 print('1. Điều hoà')
 print('2. Tủ lạnh')
-if(input() == '1'):
+if (input("Người dùng: ") == '1'):
     case = "Điều hoà" + case
     question = "Điều hoà" + question
     dict_signal = dict_signal_DH
 else:
     case = "Tủ lạnh" + case
     question = "Tủ lạnh" + question
-    data2 = pd.read_excel("Tủ lạnh\Độ tương đồng.xlsx", sheet_name=sheet_name_TL, index_col=0)
+    data2 = pd.read_excel("Tủ lạnh\Độ tương đồng.xlsx",
+                          sheet_name=sheet_name_TL, index_col=0)
     dict_signal = dict_signal_TL
 
 data = pd.read_excel(case, sheet_name=[
@@ -61,20 +65,19 @@ signals = []
 
 
 for key in doc.keys():
-    print('Hệ thống:', doc[key]['question'])
+    print('\nHệ thống:', doc[key]['question'])
     for option in doc[key]['options']:
         print(option)
 
-    ops = input('Người dùng: ').split(',')
+    ops = input('\nNgười dùng: ').split(',')
     signal = ''
     for i, op in enumerate(ops):
         code = doc[key]['code']
         signal += f'{code}%02d' % int(op)
-        if i != len(ops) - 1: 
+        if i != len(ops) - 1:
             signal += ', '
     signals.append((code, signal))
 
-print(signals)
 
 cases = data['Case']
 errors = data['Lỗi']
@@ -98,9 +101,22 @@ for index, case in cases.iterrows():
         max_probability = probability
         id = index
 
-print(max_probability)
-print(errors['Lỗi'][cases.loc[id, 'Lỗi']])
-print('Nguyên nhân:')
-print(errors['Nguyên nhân'][cases.loc[id, 'Lỗi']])
-print('Cách khắc phục')
-print(errors['Khắc phục'][cases.loc[id, 'Lỗi']])
+
+if max_probability > 0.9:
+    conclusion = 'Chắc chắn bị lỗi '
+elif max_probability > 0.7:
+    conclusion = 'Có tỉ lệ cao bị lỗi '
+elif max_probability > 0.5:
+    conclusion = 'Có khả năng bị lỗi '
+elif max_probability > 0:
+    conclusion = 'Hệ thống chưa thể xác định được lỗi'
+
+print(f"\nHệ thống: {conclusion}", end='')
+
+if max_probability > 0.5:
+    error = errors['Lỗi'][cases.loc[id, 'Lỗi']]
+    print(f"'{error}'")
+    print(
+        f"\nHệ thống: Nguyên nhân bị lỗi: \n {errors['Nguyên nhân'][cases.loc[id, 'Lỗi']]}")
+    print(
+        f"\nHệ thống: Cách khắc phục: \n {errors['Khắc phục'][cases.loc[id, 'Lỗi']]}")
