@@ -46,7 +46,7 @@ def text_preprocess(document):
 
 
 model = joblib.load('Điều hòa/model.joblib')
-test = [text_preprocess('điều hòa nhiệt độ thay đổi')]
+test = [text_preprocess('điều hòa bám tuyết ')]
 
 vectorizer = joblib.load(open("Điều hòa/tfidf.pkl", "rb"))
 test = vectorizer.transform(test)
