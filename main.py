@@ -1,6 +1,5 @@
 import regex as re
 from pyvi import ViTokenizer
-import yaml
 import pandas as pd
 import joblib
 import math
@@ -75,7 +74,7 @@ dict_signal_TL = {
 dict_signal = {}
 
 def cal_Entropy(df: pd.DataFrame):
-    print(df)
+    # print(df)
     total_cases = df.shape[0]
     property_selected = ''
     entropy_min = -1
@@ -133,9 +132,9 @@ def main():
     
     if(max(model.predict_proba(input_user)[0]) >= 0.3):
         problem_predict = model.predict(input_user)[0]
-        print(problem_predict)
+        # print(problem_predict)
     else:
-        print(model.predict(input_user)[0])
+        # print(model.predict(input_user)[0])
         print('Hệ thống: Lỗi của bạn hiện chưa có trong dữ liệu của chúng tôi')
         return
     
@@ -146,7 +145,7 @@ def main():
     while(finish == False):
         cases = cases[cases[property]== option].drop([property], axis=1)
         property, entropy, list_option_code = cal_Entropy(cases)
-        print(f'{property}: ')
+        # print(f'{property}: ')
         list_option_code = sorted(list_option_code)
         list_option = []
         for index, option in enumerate(list_option_code):
@@ -193,5 +192,3 @@ def main():
                 print('Hệ thống: Bạn vui lòng nhập đúng các lựa chọn')
 
 main()
-
-
