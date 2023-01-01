@@ -1,0 +1,1 @@
+chạy liên tục
