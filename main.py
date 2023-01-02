@@ -126,7 +126,7 @@ def main():
     expression = data['Triệu chứng']
 
     print(f'Hệ thống: {folder} của bạn gặp vấn đề gì?')
-    input_user = input('Người dùng: ')
+    input_user = input('Người dùng: ').lower()
     input_user = text_preprocess(input_user)
     input_user = vectorizer.transform([input_user])
     
@@ -182,13 +182,11 @@ def main():
                         finish = True
                     break
                 elif input_user == index:
-                    print('Hệ thống: Trường hợp này bạn vui lòng mang đến cửa hàng để kiểm tra kĩ hơn.')
+                    print('Hệ thống: Vấn đề bạn gặp phải chưa có trong hệ thống, bạn có thể mang qua cửa hàng hoặc gọi điện thoại đến số 0123456789 để được tư vấn trực tiếp từ nhân viên kỹ thuật.')
                     finish = True
                     break
                 else :
                     print('Hệ thống: Bạn vui lòng nhập đúng các lựa chọn')
-                
             except:
                 print('Hệ thống: Bạn vui lòng nhập đúng các lựa chọn')
-
 main()
