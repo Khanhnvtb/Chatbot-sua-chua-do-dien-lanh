@@ -77,7 +77,6 @@ dict_signal = {}
 
 
 def cal_Entropy(df: pd.DataFrame):
-    print(df)
     total_cases = df.shape[0]
     property_selected = ''
     entropy_min = -1
@@ -149,7 +148,6 @@ def main():
     while (finish == False):
         cases = cases[cases[property] == option].drop([property], axis=1)
         property, entropy, list_option_code = cal_Entropy(cases)
-        print(f'{property}: ')
         list_option_code = sorted(list_option_code)
         list_option = []
         for index, option in enumerate(list_option_code):
