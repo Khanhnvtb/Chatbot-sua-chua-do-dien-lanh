@@ -33,12 +33,12 @@ def convert_unicode(txt):
 
 
 def text_preprocess(document):
+    # đưa về chữ viết thường
+    document = document.lower()
     # chuẩn hóa unicode
     document = convert_unicode(document)
     # tách từ(từ đơn và từ ghép)
     document = ViTokenizer.tokenize(document)
-    # đưa về chữ viết thường
-    document = document.lower()
     # loại bỏ ký tự đặc biệt
     document = re.sub(
         r'[^\s\wáàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệóòỏõọôốồổỗộơớờởỡợíìỉĩịúùủũụưứừửữựýỳỷỹỵđ_]', ' ', document)
@@ -138,7 +138,7 @@ def main():
         print(problem_predict)
     else:
         print(model.predict(input_user)[0])
-        print('Hệ thống: Lỗi của bạn hiện chưa có trong dữ liệu của chúng tôi')
+        print('Hệ thống: Vấn đề bạn gặp phải chưa có trong hệ thống, bạn có thể mang qua cửa hàng hoặc gọi điện thoại đến số 0123456789 để được tư vấn trực tiếp từ nhân viên kỹ thuật')
         return
 
     property = dict_signal[problem_predict[:-2]]
@@ -192,7 +192,7 @@ def main():
                     break
                 elif input_user == index:
                     print(
-                        'Hệ thống: Trường hợp này bạn vui lòng mang đến cửa hàng để kiểm tra kĩ hơn.')
+                        'Hệ thống: Vấn đề bạn gặp phải chưa có trong hệ thống, bạn có thể mang qua cửa hàng hoặc gọi điện thoại đến số 0123456789 để được tư vấn trực tiếp từ nhân viên kỹ thuật')
                     finish = True
                     break
                 else:

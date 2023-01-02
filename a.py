@@ -31,12 +31,13 @@ def convert_unicode(txt):
 
 
 def text_preprocess(document):
+    document = document.lower()
     # chuẩn hóa unicode
     document = convert_unicode(document)
     # tách từ(từ đơn và từ ghép)
     document = ViTokenizer.tokenize(document)
     # đưa về chữ viết thường
-    document = document.lower()
+
     # loại bỏ ký tự đặc biệt
     document = re.sub(
         r'[^\s\wáàảãạăắằẳẵặâấầẩẫậéèẻẽẹêếềểễệóòỏõọôốồổỗộơớờởỡợíìỉĩịúùủũụưứừửữựýỳỷỹỵđ_]', ' ', document)
@@ -46,10 +47,15 @@ def text_preprocess(document):
 
 
 model = joblib.load('Điều hòa/model.joblib')
-test = [text_preprocess('điều hòa bám tuyết ')]
+test = [text_preprocess('điều hòa chạy liên tục')]
 
 vectorizer = joblib.load(open("Điều hòa/tfidf.pkl", "rb"))
 test = vectorizer.transform(test)
 
+# model = joblib.load('Tủ lạnh/model.joblib')
+# test = [text_preprocess('nhiệt độ tủ lạnh không ổn định')]
+
+# vectorizer = joblib.load(open("Tủ lạnh/tfidf.pkl", "rb"))
+# test = vectorizer.transform(test)
 print(max(model.predict_proba(test)[0]))
 print(model.predict(test))
