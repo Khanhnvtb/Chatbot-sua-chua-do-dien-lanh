@@ -1,5 +1,2 @@
-import pandas as pd
-question = pd.read_excel("Điều hòa/data.xlsx",
-                     sheet_name=['Case', 'Câu hỏi'])['Câu hỏi']
-question.loc[question['Tiêu chí'] == 'Quạt dàn lạnh']
-# print(question['Case'])
+a = ['HD03', 'HD02']
+print(sorted(a, key=lambda x: (len(x), x)))
